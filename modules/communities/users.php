@@ -5,16 +5,16 @@ is_active_module('PRIVATE_COMMUNITIES');
 
 ?> 
 <div class='menu-nav-content'>  
-<a class='menu-nav <?=($root == 'all' ? 'h' : null)?>' href='/m/communities/?'>
+<a class='menu-nav' href='/m/communities/?'>
 <?=lg('Все')?>
 </a>    
 <a class='menu-nav' href='/m/communities/categories/'>
 <?=lg('Категории')?>
 </a>    
-<a class='menu-nav <?=($root == 'rating' ? 'h' : null)?>' href='/m/communities/?get=rating'>
+<a class='menu-nav' href='/m/communities/?get=rating'>
 <?=lg('ТОП')?>
 </a>    
-<a class='menu-nav <?=($root == 'new' ? 'h' : null)?>' href='/m/communities/?get=new'>
+<a class='menu-nav' href='/m/communities/?get=new'>
 <?=lg('Новые')?>
 </a>  
 <a class='menu-nav h' href='/m/communities/users/?id=<?=$account['ID']?>'>

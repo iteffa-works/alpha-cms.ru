@@ -88,7 +88,7 @@ if (isset($_FILES) && ajax() == true) {
       
       file::error('<b>'.$FileNameExt.'</b> - '.lg('размер превышает установленные ограничения. Размер должен быть не больше %s', size_file(config('MAXFILESIZE'))));
     
-    }elseif ($FileSize < 1024) {
+    }elseif ($FileSize < 204) {
       
       file::error('<b>'.$FileNameExt.'</b> - '.lg('слишком маленькое изображение'));
     

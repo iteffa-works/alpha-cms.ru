@@ -18,7 +18,7 @@ if (get('get') == 'delete_dir_ok') {
   
   }
   
-  $data = db::get_string_all("SELECT `ID`,`USER_ID` FROM `VIDEOS` WHERE `ID_DIR` = ?", [$id_dir]);
+  $data = db::get_string_all("SELECT `ID`,`USER_ID`,`EXT` FROM `VIDEOS` WHERE `ID_DIR` = ?", [$id_dir]);
   while ($list = $data->fetch()){
     
     db::get_set("DELETE FROM `LIKES` WHERE `OBJECT_ID` = ? AND `OBJECT_TYPE` = ?", [$list['ID'], 'videos']);

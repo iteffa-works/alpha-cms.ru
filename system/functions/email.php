@@ -6,18 +6,38 @@
 ------------------------------------------------
 */
 
-function email($email_cont, $title_cont, $message_cont, $email_us) {
+function email($email_cont, $title_cont, $message_cont, $email_us = null) {
   
-  //$email_cont - адрес на который отправлять письмо  
-  //$message_cont - сообщение
-  //$title_cont - заголовок письма
-  //$email_us - адрес с которого отправлять письмо на $email_cont
+  require_once ROOT.'/system/PHPMailer/Exception.php';
+  require_once ROOT.'/system/PHPMailer/PHPMailer.php';
+  require_once ROOT.'/system/PHPMailer/SMTP.php';
+
+  $mail = new PHPMailer\PHPMailer\PHPMailer();
+  $mail->CharSet = 'UTF-8';  
+  $mail->isSMTP();
+  $mail->isHTML(true);
+  $mail->SMTPAuth = true;
+  $mail->SMTPDebug = 0;
+  if (config('EMAIL_PROTOCOL') == 'ssl' || config('EMAIL_PROTOCOL') == 'tls') { $mail->SMTPSecure = tabs(config('EMAIL_PROTOCOL')); } 
+  $mail->Host = tabs(config('EMAIL_HOST'));
+  $mail->Port = tabs(config('EMAIL_PORT'));
+  $mail->Username = tabs(config('EMAIL'));
+  $mail->Password = tabs(config('EMAIL_PASSWORD'));
   
-  $to = $email_cont;
-  $title = $title_cont;
-  $message = $message_cont;
-  $headers = "From: $email_us\r\nContent-type: text/html; charset=utf-8\r\n";
+  //От кого
+  $mail->setFrom(tabs(config('EMAIL')), tabs(config('EMAIL_NAME')));	
   
-  mail($to, $title, $message, $headers);
+  //Кому
+  $mail->addAddress($email_cont, 'Пользователю '.HTTP_HOST);
+  
+  //Тема письма
+  $mail->Subject = $title_cont;
+  
+  //Тело письма
+  $body = $message_cont;
+  $mail->msgHTML($body);
+  
+  //Отправляем
+  if (!$mail->send()) { $mail->ErrorInfo; }
 
 }

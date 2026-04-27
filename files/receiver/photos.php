@@ -63,10 +63,13 @@ if (isset($_FILES) && ajax() == true) {
     $FileSize = tabs($_FILES['file']['size'][$i]);
     
     //Оригинальное название файла
-    $FileNameExt = $_FILES['file']['name'][$i];
+    $FileNameExt = tabs($_FILES['file']['name'][$i]);
     
     //Оригинальное название файла без расширения
     $FileName = tprcs(preg_replace('#\.[^\.]*$#', null, $FileNameExt));
+    
+    //Зашифрованное название файла на сервере
+    $FileShif = md5(user('ID').rand(11111111,99999999).microtime());
     
     //Расширение файла без названия
     $Ext = strtolower(preg_replace('#^.*\.#', null, $FileNameExt));
@@ -79,7 +82,7 @@ if (isset($_FILES) && ajax() == true) {
     $width = $xy[0]; 
     $height = $xy[1];
 
-    if (db::get_column("SELECT COUNT(*) FROM `PHOTOS` WHERE `USER_ID` = ? AND `NAME` = ? LIMIT 1", [user('ID'), $FileName]) > 0){
+    if (db::get_column("SELECT COUNT(*) FROM `PHOTOS` WHERE `USER_ID` = ? AND `NAME` = ? LIMIT 1", [user('ID'), $FileName]) > 0) {
       
       file::error('<b>'.$FileNameExt.'</b> - '.lg('изображение с таким названием уже есть в ваших альбомах'));
     
@@ -118,18 +121,15 @@ if (isset($_FILES) && ajax() == true) {
     }else{
       
       //Сохраняем файл
-      if (@copy($TempName, $uploadDir.$FileName.'.'.$Ext)) {
+      if (@copy($TempName, $uploadDir.$FileShif.'.'.$Ext)) {
         
-        $shif = md5(user('ID').rand(111111,999999).TM);
-        
-        $ID = db::get_add("INSERT INTO `PHOTOS` (`NAME`, `USER_ID`, `EXT`, `SIZE`, `TIME`, `ID_DIR`, `SHOW`, `SHIF`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [$FileName, user('ID'), $Ext, filesize($TempName), TM, intval($dir['ID']), 1, $shif]);        
-        
-        rename($uploadDir.$FileName.'.'.$Ext, $uploadDir.$shif.'.'.$Ext);
-        crop_image($uploadDir.$shif.'.'.$Ext, ROOT.'/files/upload/photos/50x50/'.$shif.'.jpg', 50, 50);
-        crop_image($uploadDir.$shif.'.'.$Ext, ROOT.'/files/upload/photos/150x150/'.$shif.'.jpg', 150, 150);
-        crop_image($uploadDir.$shif.'.'.$Ext, ROOT.'/files/upload/photos/240x240/'.$shif.'.jpg', 240, 240);
-        crop_image($uploadDir.$shif.'.'.$Ext, ROOT.'/files/upload/photos/260x600/'.$shif.'.jpg', 640, 260);        
-        fd_upload($uploadDir.$shif.'.'.$Ext, 'photos');
+        $IDfile = db::get_add("INSERT INTO `PHOTOS` (`NAME`, `USER_ID`, `EXT`, `SIZE`, `TIME`, `ID_DIR`, `SHIF`) VALUES (?, ?, ?, ?, ?, ?, ?)", [$FileName, user('ID'), $Ext, filesize($TempName), TM, intval($dir['ID']), $FileShif]);       
+
+        crop_image($uploadDir.$FileShif.'.'.$Ext, ROOT.'/files/upload/photos/50x50/'.$FileShif.'.jpg', 50, 50);
+        crop_image($uploadDir.$FileShif.'.'.$Ext, ROOT.'/files/upload/photos/150x150/'.$FileShif.'.jpg', 150, 150);
+        crop_image($uploadDir.$FileShif.'.'.$Ext, ROOT.'/files/upload/photos/240x240/'.$FileShif.'.jpg', 240, 240);
+        crop_image($uploadDir.$FileShif.'.'.$Ext, ROOT.'/files/upload/photos/260x600/'.$FileShif.'.jpg', 640, 260);       
+        fd_upload($uploadDir.$FileShif.'.'.$Ext, 'photos');
         
         balls_add('PHOTOS');
         rating_add('PHOTOS');
@@ -145,7 +145,7 @@ if (isset($_FILES) && ajax() == true) {
           $data = db::get_string_all("SELECT `MY_ID`,`USER_ID` FROM `SUBSCRIBERS` WHERE `USER_ID` = ?", [user('ID')]);
           while ($list = $data->fetch()){
             
-            db::get_add("INSERT INTO `TAPE` (`USER_ID`, `OBJECT_ID`, `OBJECT_ID_LIST`, `TIME`, `TYPE`) VALUES (?, ?, ?, ?, ?)", [$list['MY_ID'], $ID, $list['USER_ID'], TM, 'photos']);
+            db::get_add("INSERT INTO `TAPE` (`USER_ID`, `OBJECT_ID`, `OBJECT_ID_LIST`, `TIME`, `TYPE`) VALUES (?, ?, ?, ?, ?)", [$list['MY_ID'], $IDfile, $list['USER_ID'], TM, 'photos']);
           
           } 
         

@@ -64,7 +64,7 @@ if (user('ID') > 0) {
     </div>
     <?
       
-    acms_footer();
+    exit();
     
   }
 

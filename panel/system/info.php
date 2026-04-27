@@ -1,7 +1,5 @@
 <?php  
-html::title('Руководитель');
-acms_header();
-access('management');
+acms_header('Руководитель', 'management');
   
 ?>
 <div class='navigation'>
@@ -12,8 +10,7 @@ access('management');
 <?=lg('Руководитель')?>
 </div>
   
-<div class='list-body6'>
-  
+<div class='list-body'>  
 <div class='list-menu list-title'> 
 <?=lg('Руководитель проекта')?>
 </div>
@@ -25,7 +22,7 @@ if (post('ok_info')){
     
     'ADM_NAME' => ['name', 'text', [1, 200], 'Имя'],
     'ADM_SURNAME' => ['surname', 'text', [1, 200], 'Фамилия'],
-    'ADM_EMAIL' => ['email', 'email', [5, 80], 'E-mail', 2]
+    'ADM_EMAIL' => ['email', 'email', [5, 80], 'E-mail', 0]
     
   ));
   
@@ -43,8 +40,7 @@ if (post('ok_info')){
   redirect('/admin/system/info/');
 
 }  
-?>
-  
+?>  
 <div class='list-menu'>  
 <form method='post' class='ajax-form' action='/admin/system/info/'>  
 <?=html::input('name', null, 'Имя:', null, tabs(config('ADM_NAME')), 'form-control-100', null, null, 'pencil')?>  
@@ -52,9 +48,8 @@ if (post('ok_info')){
 <?=html::input('email', null, 'Личный e-mail:', null, tabs(config('ADM_EMAIL')), 'form-control-100', null, null, 'pencil')?> 
 <?=html::button('button ajax-button', 'ok_info', 'save', 'Сохранить изменения')?>  
 </form>
+</div>  
 </div>
-  
-</div><br />
 <?
 
 back('/admin/system/');

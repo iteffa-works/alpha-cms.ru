@@ -29,6 +29,7 @@ if (config('AUT_MODE') == 0) {
     if (!empty(cookie('USER_ID')) && !empty(cookie('PASSWORD'))) {
 
       session('salt', base64_encode(cookie('USER_ID').','.cookie('PASSWORD')));
+      visits(cookie('USER_ID'), 0);
       redirect(REQUEST_URI);
       
     }
@@ -67,6 +68,12 @@ if (config('AUT_MODE') == 2) {
   
 }
 
+/*
+------------------------------------
+Обертка для данных из учетной записи
+------------------------------------
+*/
+
 function user($data) {
   
   global $us_data;
@@ -80,6 +87,25 @@ function user($data) {
   return 0;
 
 }
+
+/*
+-----------------------------------
+Сброс авторизации со всех устройств
+-----------------------------------
+*/
+
+if (user('ID') > 0 && user('EXIT') == 1 && get('base') != 'main' && get('section') != 'exit') {
+  
+  redirect('/exit/');
+
+}
+
+/*
+------------------------------------
+Подключение дополнительных опций для
+аккаунта
+------------------------------------
+*/
 
 require (ROOT.'/system/connections/array_to_function.php');
 require (ROOT.'/system/connections/timezone.php');

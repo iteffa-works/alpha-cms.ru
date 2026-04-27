@@ -174,7 +174,7 @@ function clearspecialchars($text) {
 
 function esc($text){
 
-  return addslashes($text);
+  return trim(addslashes($text));
 
 }
 

@@ -8,19 +8,10 @@
   
 $settings_data = db::get_string("SELECT * FROM `USERS_SETTINGS` WHERE `USER_ID` = ? LIMIT 1", [user('ID')]); 
   
-function settings($data){
+function settings($data) {
   
   global $settings_data;
-  
-  if (user('ID') == 0){
-    
-    return 0;
-    
-  }else{
-
-    return tabs($settings_data[$data]);
-    
-  }
+  return tabs($settings_data[$data]);
   
 }
 

@@ -8,51 +8,121 @@
   
 class user {
   
-  public static function avatar($ID, $size = 80, $online = 0, $border = 0){
+  public static function avatar($ID, $size = 80, $online = 0, $border = 0, $color_avatar = 1, $color_avatar_gr1 = null, $color_avatar_gr2 = null){
     
     //$ID - идентификатор пользователя
     //$size - размер аватара
     //$online - вывод значка онлайн
     //$border - белая обводка аватара для отступа от границ (0 - выкл, 1 - вкл)
+    //$color_avatar - цветная рамка для аватара (0 - выкл, 1 - вкл)
+    //$color_avatar_gr1 - градиент 1
+    //$color_avatar_gr2 - градиент 2
 
-    $account = db::get_string("SELECT `DATE_VISIT`,`VERSION` FROM `USERS` WHERE `ID` = ? LIMIT 1", [$ID]);
-    $account_set = db::get_string("SELECT `AVATAR`,`AVATAR_PHONE` FROM `USERS_SETTINGS` WHERE `USER_ID` = ? LIMIT 1", [$ID]); 
-    $photo = db::get_string("SELECT `SHIF`,`ID_DIR` FROM `PHOTOS` WHERE `ID` = ? LIMIT 1", [$account_set['AVATAR']]);
+    $account = db::get_string("SELECT * FROM `USERS` WHERE `ID` = ? LIMIT 1", [$ID]);
+    $account_set = db::get_string("SELECT * FROM `USERS_SETTINGS` WHERE `USER_ID` = ? LIMIT 1", [$ID]); 
+    $photo = db::get_string("SELECT `SHIF`,`ID_DIR`,`EXT` FROM `PHOTOS` WHERE `ID` = ? LIMIT 1", [$account_set['AVATAR']]);
 
     $on = null;
+    $avatar_color_size = $size;
+    $avatar_color_on = null;
+    $avatar_color_css = null;
+    $avatar_color_border = null;
+    $border_max = ($border == 1 ? 7 : 0);
     $border = ($border == 1 ? 'border: 7px #fff solid;' : null);
+    $christmas_hats = null;
+    
+    /*
+    -------------------------------------
+    Услуга "Новогодняя шапка для аватара"
+    -------------------------------------
+    */
+    
+    if (isset($account_set['CHRISTMAS_HATS']) && isset($account_set['CHRISTMAS_HATS_TIME'])) {
+      
+      if ($online == 0 && $size == 85 || $online != 0 && $size == 45 || $online != 0 && $size == 55) {
+        
+        $christmas_hats = christmas_hats_avatar($size, $account_set['CHRISTMAS_HATS'], $account_set['CHRISTMAS_HATS_TIME'], $account_set['CHRISTMAS_HATS_OFF']);
+        
+      }
+      
+    }
+    
+    /*
+    ----------------------------------
+    Услуга "Цветная рамка для аватара"
+    ----------------------------------
+    */
+    
+    if (isset($account['AVATAR_COLOR1']) && isset($account['AVATAR_COLOR2']) && isset($account['AVATAR_COLOR_SET']) && isset($account['AVATAR_COLOR_ANIMATE'])) {
+      
+      if (!is_panel() && $size != 100 && $color_avatar == 1 && str($account['AVATAR_COLOR1']) > 0 && str($account['AVATAR_COLOR2']) > 0 && $account['AVATAR_COLOR_SET'] == 1){
+        
+        if ($size == 55 || $size == 45 || $size >= 85) {
+          
+          $avatar_color_css = 'class="avatar_color"';
+          $border = null;
+          $avatar_color_size = ($size - ($border_max != 7 ? 8 : 2));
+          $avatar_color_on = 'bottom: -4px';
+          $avatar_color_border = "background: linear-gradient(90deg, #".tabs($account['AVATAR_COLOR1']).", #".tabs($account['AVATAR_COLOR2']).", #".tabs($account['AVATAR_COLOR1']).", #".tabs($account['AVATAR_COLOR2'])."); background-size: 400% 400%; bottom: ".$border_max."px; width: ".($avatar_color_size + 8)."px; height: ".($avatar_color_size + 8)."px; ".($account['AVATAR_COLOR_ANIMATE'] == 1 ? "animation: avatar_color_gradient 5s ease infinite;" : null);
+        
+        }
+      
+      }
+      
+    }
+    
+    if ($color_avatar_gr1 != null && $color_avatar_gr2 != null) {
+      
+      $avatar_color_css = 'class="avatar_color"';
+      $border = null;
+      $avatar_color_size = ($size - ($border_max != 7 ? 8 : 2));
+      $avatar_color_on = 'bottom: -4px';
+      $avatar_color_border = "background: linear-gradient(90deg, #".tabs($color_avatar_gr1).", #".tabs($color_avatar_gr2).", #".tabs($color_avatar_gr1).", #".tabs($color_avatar_gr2)."); background-size: 400% 400%; bottom: ".$border_max."px; width: ".($avatar_color_size + 8)."px; height: ".($avatar_color_size + 8)."px; animation: avatar_color_gradient 5s ease infinite;";
+      
+    }
 
     if ($online == 1 && $account['DATE_VISIT'] > (TM - config('ONLINE_TIME_USERS'))){
       
-      $on = "<span class='avatar-online-".($account['VERSION'] == 'touch' ? 'touch' : 'web')."' style='z-index: 2'><span><i class='fa fa-".($account['VERSION'] == 'touch' ? 'mobile' : 'desktop')."'></i></span></span>";
+      $on = "<span class='avatar-online-".($account['VERSION'] == 'touch' ? 'touch' : 'web')."' style='".$avatar_color_on."; z-index: 2'><span><i class='fa fa-".($account['VERSION'] == 'touch' ? 'mobile' : 'desktop')."'></i></span></span>";
     
     }  
     
-    $size_text = $size / 2 - 2;
+    $size_text = $avatar_color_size / 2 - 2;
     
     //Пользователь удален или его не существует
     if (!isset($account['VERSION'])) {
       
-      return "<span style='display: inline-block; position: relative'><div class='avatar-o' style='".$border." background-color: ".$account_set['AVATAR_PHONE']."; font-size: ".$size_text."px; width: ".$size."px; height: ".$size."px;'><span><i class='fa fa-times'></i></span></div></span>";
+      return "<span style='display: inline-block; position: relative; ".$avatar_color_border."' ".$avatar_color_css."><div class='avatar-o' style='".$border." background-color: ".$account_set['AVATAR_PHONE']."; font-size: ".$size_text."px; width: ".$avatar_color_size."px; height: ".$avatar_color_size."px;'><span><i class='fa fa-times'></i></span></div></span>";
     
     }
     
     //Пользователь заблокирован
     if (db::get_column("SELECT COUNT(*) FROM `BAN_USER` WHERE `USER_ID` = ? AND `BAN` = ? LIMIT 1", [$ID, 1]) > 0) {
       
-      return "<span style='display: inline-block; position: relative'><div class='avatar-o' style='".$border." background-color: ".$account_set['AVATAR_PHONE']."; font-size: ".$size_text."px; width: ".$size."px; height: ".$size."px;'><span><i class='fa fa-ban'></i></span></div>".$on."</span>";
+      return "<span style='display: inline-block; position: relative; ".$avatar_color_border."' ".$avatar_color_css."><div class='avatar-o' style='".$border." background-color: ".$account_set['AVATAR_PHONE']."; font-size: ".$size_text."px; width: ".$avatar_color_size."px; height: ".$avatar_color_size."px;'><span><i class='fa fa-ban'></i></span></div>".$on."</span>";
     
+    }
+    
+    //Пользователь купил услугу и установил GIF аватар
+    if (isset($account['GIF_AVATAR_TIME'])) {
+      
+      if (is_file(ROOT.'/files/upload/photos/150x150/'.$photo['SHIF'].'.jpg') && $photo['EXT'] == 'gif' && $account['GIF_AVATAR_TIME'] > TM) {
+        
+        return "<span style='display: inline-block; position: relative; ".$avatar_color_border."' ".$avatar_color_css.">".$christmas_hats."<img class='avatar' style='".$border." width: ".$avatar_color_size."px; height: ".$avatar_color_size."px; position: relative; z-index: 1' src='/files/upload/photos/source/".$photo['SHIF'].".gif'>".$on."</span>";
+      
+      }
+      
     }
     
     //Пользователь установил аватар, выводим фото
     if (is_file(ROOT.'/files/upload/photos/150x150/'.$photo['SHIF'].'.jpg')) {
       
-      return "<span style='display: inline-block; position: relative'><img class='avatar' style='".$border." width: ".$size."px; height: ".$size."px; position: relative; z-index: 1' src='/files/upload/photos/150x150/".$photo['SHIF'].".jpg'>".$on."</span>";
+      return "<span style='display: inline-block; position: relative; ".$avatar_color_border."' ".$avatar_color_css.">".$christmas_hats."<img class='avatar' style='".$border." width: ".$avatar_color_size."px; height: ".$avatar_color_size."px; position: relative; z-index: 1' src='/files/upload/photos/150x150/".$photo['SHIF'].".jpg'>".$on."</span>";
     
     }
     
     //Пользователь не установил аватар, выводим базовый аватар
-    return "<span style='display: inline-block; position: relative'><div class='avatar-o' style='".$border." background-color: ".$account_set['AVATAR_PHONE']."; font-size: ".$size_text."px; width: ".$size."px; height: ".$size."px'><span>".mb_substr(user::login_mini($ID), 0, 1, 'utf-8')."</span></div>".$on."</span>";
+    return "<span style='display: inline-block; position: relative; ".$avatar_color_border."' ".$avatar_color_css."'>".$christmas_hats."<div class='avatar-o' style='".$border." background-color: ".$account_set['AVATAR_PHONE']."; font-size: ".$size_text."px; width: ".$avatar_color_size."px; height: ".$avatar_color_size."px'><span>".mb_substr(user::login_mini($ID), 0, 1, 'utf-8')."</span></div>".$on."</span>";
   
   }
   

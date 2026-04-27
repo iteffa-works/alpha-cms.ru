@@ -11,6 +11,7 @@ function visits($user_id, $msg = 1) {
   //$user_id - ID аккаунта
   //$msg - отправка письма пользователю о новом входе в аккаунт, если 1
   
+  $user_id = intval($user_id);
   $location = @unserialize(file_get_contents('http://ip-api.com/php/'.IP.'?lang=ru'));
   $city = db::get_string("SELECT `NAME`,`ID_COUNTRY` FROM `CITY` WHERE `NAME` = ? LIMIT 1", [(isset($location['city']) ? esc($location['city']) : null)]);
   $country = db::get_string("SELECT `NAME` FROM `COUNTRY` WHERE `ID` = ? LIMIT 1", [esc($city['ID_COUNTRY'])]);

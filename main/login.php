@@ -40,7 +40,7 @@ if (post('ok_aut')){
   }
   
   $hash = user_hash($us['ID']);
-  db::get_set("UPDATE `USERS` SET `IP` = ?, `BROWSER` = ?, `HASH` = ? WHERE `ID` = ? LIMIT 1", [IP, BROWSER, $hash, $us['ID']]);  
+  db::get_set("UPDATE `USERS` SET `IP` = ?, `BROWSER` = ?, `HASH` = ?, `EXIT` = ? WHERE `ID` = ? LIMIT 1", [IP, BROWSER, $hash, 0, $us['ID']]);  
   session('HASH', $hash); 
   session('HASH_OUT', (AUT_SAVE == 0 ? null : (TM + 3600)));
   session('captcha', 0);
@@ -51,6 +51,7 @@ if (post('ok_aut')){
   setcookie('USER_ID', user_shif($us['ID']), $save, '/');
   setcookie('PASSWORD', cencrypt(post('password'), $us['ID']), $save, '/');
   session('salt', base64_encode(user_shif($us['ID']).','.cencrypt(post('password'), $us['ID'])));
+  visits($us['ID']);
 
   hooks::challenge('aut', 'aut');  
   hooks::run('aut');

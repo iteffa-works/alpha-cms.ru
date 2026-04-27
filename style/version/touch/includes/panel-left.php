@@ -13,7 +13,7 @@
   
 <div class='pfm'>
   
-<?php if (user('ID') > 0) { ?>  
+<?php if (user('ID') > 0) : ?>  
   
 <div class='panel-left-phone'>
 <div class='message cabinet-phone'>
@@ -53,15 +53,15 @@
 </div>  
 </center>
   
-<?php if (access('administration_show', null, 1) == true) { ?>
+<?php if (access('administration_show', null, 1) == true) : ?>
 <a href='/admin/' ajax='no' class='panel-left-menu pfm_gray hover'>
 <?=m_icons('gear', 12, '#2F454F', 0)?> <?=lg('Панель управления')?> <b>(<?=config('ACMS_VERSION')?>)</b>
 </a> 
-<?php } ?>
+<?php endif ?>
   
 <a class='panel-left-menu pfm_gray hover' href='/id<?=user('ID')?>'><?=m_icons('user', 11, '#2F454F', 0)?> <span><?=lg('Моя страница')?></span></a> 
   
-<?php }else{ ?> 
+<?php else : ?> 
   
 <div class='panel-left-menu pfm_name'>
 <?=lg('Авторизация')?>
@@ -95,7 +95,7 @@ html::button('button', 'ok_aut', null, 'Войти');
   
 </div>
   
-<?php } ?>
+<?php endif ?>
   
 <div class='panel-left-menu pfm_name'>
 <?=lg('Разделы сайта')?>
@@ -103,9 +103,13 @@ html::button('button', 'ok_aut', null, 'Войти');
   
 <?=direct::components(ROOT.'/main/components/main_menu_small/', 0)?>
 
+<?php if (version('DESIGN_BUTTON') == 1) : ?>
 <button class='panel-left-menu pfm_gray hover' onclick="modal_center('version', 'open', '/system/AJAX/php/version.php', 'ver_upload')"><?=m_icons('desktop', 11, '#2F454F', 0)?> <span><?=lg('Версия')?>: <?=VERSION?></span></button>
-  
+<?php endif ?>
+
+<?php if (version('LANGUAGE_BUTTON') == 1) : ?>
 <button class='panel-left-menu pfm_gray hover' onclick="modal_center('languages', 'open', '/system/AJAX/php/languages.php', 'lang_upload')"><?=m_icons('globe', 12, '#2F454F', 0)?> <span><?=lg('Язык')?>: <?=LANGUAGE?></span></button>
+<?php endif ?>
   
 <div class='panel-left-menu'>
 <center>

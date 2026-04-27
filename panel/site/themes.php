@@ -156,6 +156,8 @@ if (get('them_edit')){
   if (post('ok_edit_them')){
     
     $size_logo = intval(post('size_logo'));
+    $design = intval(post('design'));
+    $language = intval(post('language'));
     $name = esc(post('name'));
     
     if ($size_logo < 20) {
@@ -193,7 +195,7 @@ if (get('them_edit')){
       
     }
     
-    db::get_set("UPDATE `PANEL_THEMES` SET `NAME` = ?, `LOGO_MAX` = ? WHERE `ID` = ? LIMIT 1", [$name, $size_logo, $them['ID']]);
+    db::get_set("UPDATE `PANEL_THEMES` SET `NAME` = ?, `LOGO_MAX` = ?, `DESIGN_BUTTON` = ?, `LANGUAGE_BUTTON` = ? WHERE `ID` = ? LIMIT 1", [$name, $size_logo, $design, $language, $them['ID']]);
     
     success('Изменения успешно приняты');
     redirect('/admin/site/themes/?them_edit='.$them['ID']);
@@ -203,15 +205,17 @@ if (get('them_edit')){
   ?>
   <div class='list-menu'>
   <form method='post' class='ajax-form' action='/admin/site/themes/?them_edit=<?=$them['ID']?>'>  
-  <?=html::input('name', null, 'Имя:', null, tabs($them['NAME']), 'form-control-100', 'text')?>
+  <?=html::input('name', null, 'Имя:', null, tabs($them['NAME']), 'form-control-100', 'text', ($them['ACT'] == 2 ? 'readonly="readonly"' : null), 'paint-brush')?>
   <b><?=lg('Логотип')?>:</b><br />
   <div id='logo' style='margin: 15px; background: black; padding: 10px;'><img src='/style/version/<?=$them['DIR']?>/logo/<?=$them['LOGO']?>' style='max-width: <?=$them['LOGO_MAX']?>px;'></div>
   <?=attachments_result()?>
   <a ajax="no" id="modal_bottom_open_set" onclick="upload('/system/AJAX/php/them_logo.php?id=<?=$them['ID']?>', 'attachments_upload')" class="button3"><?=icons('upload', 15, 'fa-fw')?> <?=lg('Загрузить новый логотип')?></a>
   <br /><br />    
   <div id='logo_max'>
-  <?=html::input('size_logo', null, 'Размер логотипа:', null, $them['LOGO_MAX'], 'form-control-30', 'text')?>
+  <?=html::input('size_logo', null, 'Размер логотипа:', null, $them['LOGO_MAX'], 'form-control-30', 'number', null, 'image')?>
   </div>
+  <?=html::checkbox('design', 'Показ кнопки выбора темы оформления', 1, $them['DESIGN_BUTTON'])?><br /><br />
+  <?=html::checkbox('language', 'Показ кнопки выбора языка', 1, $them['LANGUAGE_BUTTON'])?><br /><br /> 
   <?=html::button('button ajax-button', 'ok_edit_them', 'save', 'Сохранить изменения')?>
   </form>
   </div> 

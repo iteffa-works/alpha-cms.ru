@@ -1,6 +1,6 @@
 <?php
   
-if (get('base') != 'panel'){
+if (get('base') != 'panel') {
   
   /*
   ------------------------
@@ -30,9 +30,11 @@ if (get('base') != 'panel'){
   
   }
   
-  function version($data){
-    
-    $version = db::get_string("SELECT * FROM `PANEL_THEMES` WHERE `DIR` = ? AND `ACT` >= '1' LIMIT 1", [esc(VERSION)]);  
+  $version = db::get_string("SELECT * FROM `PANEL_THEMES` WHERE `DIR` = ? AND `ACT` >= '1' LIMIT 1", [esc(VERSION)]);
+  
+  function version($data) {
+  
+    global $version;
     return tabs($version[$data]);
   
   }
