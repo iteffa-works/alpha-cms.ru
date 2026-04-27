@@ -74,22 +74,14 @@ define('DB_USER', config('DB_USER'));
 //Пароль от базы
 define('DB_PASSWORD', config('DB_PASSWORD'));
 
-/*
------------
-Инсталлятор
------------
-*/
 
-if (strlen(session('no_install')) == 0 && is_dir(ROOT.'/install/')){
-  
-  if (PHP_SELF != '/install/index.php'){
-    
-    header('location: /install/');
-    exit;
-    
-  }
-
-}
+# Инсталлятор
+// if (strlen(session('no_install')) == 0 && is_dir(ROOT.'/install/')){
+//   if (PHP_SELF != '/install/index.php'){
+//     header('location: /install/');
+//     exit;
+//   }
+// }
 
 /*
 --------------------
