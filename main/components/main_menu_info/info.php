@@ -1,0 +1,1 @@
+<a class='menu-container_item-info' href='/m/info/'><div><?=m_icons('info', 12, '#F7507C')?> <?=lg('Информация')?></div></a>

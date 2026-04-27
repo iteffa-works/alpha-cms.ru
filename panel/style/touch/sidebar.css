@@ -1,0 +1,99 @@
+.sidebar_wrap_hidden {
+  
+  display: none !important;
+
+}
+
+.sidebar_hide_hidden {
+  
+  display: none !important;
+
+}
+
+.sidebar_wrap {
+
+  background-color: white;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 111;
+  animation-name: menuClose;
+  animation-duration: 0.4s;
+  width: 260px;
+
+}
+
+.sidebar_wrap.wrap_active {
+
+  animation-name: menuOpen;
+  animation-duration: 0.4s;
+
+}
+
+.sidebar_hide {
+  
+  z-index: 101;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(50, 55, 60, 0.8);
+
+}
+
+.sidebar_hide.hide_active {
+
+  animation-name: menuShow;
+  animation-duration: 0.4s;
+
+}
+
+@keyframes menuOpen {
+  
+  from {
+    
+    left: -260px;
+  
+  }
+  
+  to {
+    
+    left: 0;
+  
+  }
+
+}
+
+@keyframes menuClose {
+  
+  from {
+    
+    left: 0;
+  
+  }
+  
+  to {
+    
+    left: -260px;
+  
+  }
+
+}
+
+@keyframes menuShow {
+  
+  from {
+    
+    opacity: 0;
+  
+  }
+  
+  to {
+    
+    opacity: 1;
+  
+  }
+
+}

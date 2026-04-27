@@ -1,0 +1,35 @@
+CREATE TABLE `CONTACTS` (
+  
+`ID` int(11) NOT NULL AUTO_INCREMENT,
+  
+`TIME` int(11) NOT NULL,
+  
+`MESSAGE` varchar(3000) NOT NULL,
+  
+`VK` varchar(300) NOT NULL,
+  
+`EMAIL` varchar(300) NOT NULL,
+  
+`PHONE` varchar(50) NOT NULL,
+  
+`OK` varchar(300) NOT NULL,
+  
+`YOUTUBE` varchar(300) NOT NULL,
+  
+`INSTAGRAM` varchar(300) NOT NULL,
+  
+`TIKTOK` varchar(300) NOT NULL,
+  
+`TELEGRAM` varchar(300) NOT NULL,
+  
+`TWITTER` varchar(300) NOT NULL,
+  
+`FACEBOOK` varchar(300) NOT NULL,
+  
+`VIBER` varchar(100) NOT NULL,
+  
+`WHATSAPP` varchar(100) NOT NULL,
+  
+`ADRESS` varchar(500) NOT NULL,
+PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;

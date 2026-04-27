@@ -1,0 +1,1 @@
+<a class='menu-container_item-info' href='/m/contacts/'><div><?=m_icons('at', 12, '#2196F3')?> <?=lg('Контакты')?></div></a>

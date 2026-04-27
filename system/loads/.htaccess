@@ -1,0 +1,9 @@
+
+  
+  # Запрещаем выполнение скриптов в данной директории (php3 php phps php6  и так далее являются опасными)
+  <FilesMatch "\.(php|cgi|pl|php3|php4|php5|php6|php7|js|phps|phtml|shtml|py)$">
+Order allow,deny
+Deny from all
+</FilesMatch>
+  
+  

@@ -1,0 +1,50 @@
+.dialog_container {
+
+  height: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom: 1px #DAE2E6 solid;
+  margin-top: -1px;
+  
+}
+
+.dialog_container::-webkit-scrollbar { height: 0px; width: 7px; }
+.dialog_container::-webkit-scrollbar-button {  display: none; }
+.dialog_container::-webkit-scrollbar-track {  background-color: #909DA7; }
+.dialog_container::-webkit-scrollbar-track-piece { background-color: #ffffff; }
+.dialog_container::-webkit-scrollbar-thumb { height: 50px; background-color: #909DA7; border-radius: 2px; }
+.dialog_container::-webkit-scrollbar-corner { background-color: #909DA7; }
+.dialog_container::-webkit-resizer { background-color: #909DA7; }
+.dialog_container::scrollbar { height: 0px; width: 7px; }
+.dialog_container::scrollbar-button {  display: none; }
+.dialog_container::scrollbar-track {  background-color: #909DA7; }
+.dialog_container::scrollbar-track-piece { background-color: #ffffff; }
+.dialog_container::scrollbar-thumb { height: 50px; background-color: #909DA7; border-radius: 2px; }
+.dialog_container::scrollbar-corner { background-color: #909DA7; }
+.dialog_container::resizer { background-color: #909DA7; }
+
+#dialog_modal {
+  
+  position: absolute;
+  top: 55px;
+  left: 0;
+  width: 320px;
+  height: 281px;
+  border: 1px solid #DAE2E6;
+  background-color: white;
+  border-radius: 4px;
+  z-index: 10000;
+  overflow: hidden;
+  
+}
+
+#dialog_close {
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 101;
+  
+}

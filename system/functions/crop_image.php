@@ -1,0 +1,68 @@
+<?php
+
+/*
+----------------------------------------
+Функция уменьшения и обрезки изображений
+----------------------------------------
+*/
+  
+function crop_image($aInitialImageFilePath, $aNewImageFilePath, $aNewImageWidth, $aNewImageHeight) {
+  
+  if ($aNewImageWidth < 0 || $aNewImageHeight < 0) {
+    
+    return false;
+  
+  }
+  
+  //Массив с поддерживаемыми типами изображений
+  $lAllowedExtensions = array(1 => "gif", 2 => "jpeg", 3 => "png", 4 => "jpg", 5 => "webp"); 
+  
+  //Получаем размеры и тип изображения в виде числа
+  list($lInitialImageWidth, $lInitialImageHeight, $lImageExtensionId) = getimagesize($aInitialImageFilePath);
+  
+  /*if (!array_key_exists($lImageExtensionId, $lAllowedExtensions)) {
+
+    return false;
+  
+  }*/
+  
+  $lImageExtension = $lAllowedExtensions[$lImageExtensionId];
+  if (str($lImageExtension) == 0) { $lImageExtension = 'webp'; }
+  
+  //Получаем название функции, соответствующую типу, для создания изображения
+  $func = 'imagecreatefrom'.$lImageExtension; 
+  
+  //Создаём дескриптор исходного изображения
+  $lInitialImageDescriptor = $func($aInitialImageFilePath);
+  
+  //Определяем отображаемую область
+  $lCroppedImageWidth = 0;
+  $lCroppedImageHeight = 0;
+  $lInitialImageCroppingX = 0;
+  $lInitialImageCroppingY = 0;
+  
+  if ($aNewImageWidth / $aNewImageHeight > $lInitialImageWidth / $lInitialImageHeight) {
+    
+    $lCroppedImageWidth = floor($lInitialImageWidth);
+    $lCroppedImageHeight = floor($lInitialImageWidth * $aNewImageHeight / $aNewImageWidth);
+    $lInitialImageCroppingY = floor(($lInitialImageHeight - $lCroppedImageHeight) / 2);
+  
+  }else{
+    
+    $lCroppedImageWidth = floor($lInitialImageHeight * $aNewImageWidth / $aNewImageHeight);
+    $lCroppedImageHeight = floor($lInitialImageHeight);
+    $lInitialImageCroppingX = floor(($lInitialImageWidth - $lCroppedImageWidth) / 2);
+  
+  }
+  
+  //Создаём дескриптор для выходного изображения
+  
+  $lNewImageDescriptor = imagecreatetruecolor($aNewImageWidth, $aNewImageHeight);
+  imagecopyresampled($lNewImageDescriptor, $lInitialImageDescriptor, 0, 0, $lInitialImageCroppingX, $lInitialImageCroppingY,
+$aNewImageWidth, $aNewImageHeight, $lCroppedImageWidth, $lCroppedImageHeight);
+  $func = 'image' . $lImageExtension;
+  
+  //сохраняем полученное изображение в указанную директорию
+  return $func($lNewImageDescriptor, $aNewImageFilePath);
+  
+}

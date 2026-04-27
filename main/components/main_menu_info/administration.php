@@ -1,0 +1,1 @@
+<a class='menu-container_item-info' href='/m/list_administration/'><div><?=m_icons('user', 12, '#B86825')?> <?=lg('Администрация')?></div></a>

@@ -1,0 +1,1 @@
+<a class='menu-container_item' href='/account/visits/'><?=b_icons('sign-in', db::get_column("SELECT COUNT(*) FROM `USERS_VISITS` WHERE `USER_ID` = ?", [user('ID')]), 30, '#6C9DFF', '#80DEEA')?><span><?=lg('История входов')?></span></a>

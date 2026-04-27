@@ -1,0 +1,374 @@
+.attachments_files_type {
+  
+  position: relative;
+  display: inline-block;
+  margin: 7px;
+  text-align: center;
+  
+}
+
+.attachments_files_type img{
+  
+  max-width: 60px;
+  border-radius: 5px;
+  
+}
+
+.attachments_delete{
+  
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  background-color: white;
+  width: 23px;
+  height: 23px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 100%;
+  box-shadow: 0px 0px 8px 0px rgba(158,160,183,0.32);
+  z-index: 2;
+  
+}
+
+.avatar {
+  
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 100%;
+  background-color: #5E6678;
+
+}
+
+.avatar-o {
+  
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #5E6678;
+  position: relative;
+
+}
+
+.avatar-o span{
+
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.avatar-online-touch {
+  
+  right: -1px; 
+  bottom: 0; 
+  position: absolute;
+  
+}
+
+.avatar-online-touch span{
+  
+  position: relative;
+  text-align: center; 
+  background-color: #2CCB94; 
+  display: inline-block; 
+  width: 13px; 
+  height: 13px; 
+  border-radius: 100%;
+  overflow: hidden;
+  color: white;
+  border: 2px white solid;
+  
+}
+
+.avatar-online-touch i{
+  
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); 
+  font-size: 10px;
+  
+}
+
+.avatar-online-web {
+  
+  right: -1px; 
+  bottom: 0; 
+  position: absolute;
+  
+}
+
+.avatar-online-web span{
+  
+  position: relative;
+  text-align: center; 
+  background-color: #2CCB94; 
+  display: inline-block; 
+  width: 13px; 
+  height: 13px; 
+  border-radius: 100%;
+  overflow: hidden;
+  color: white;
+  border: 2px white solid;
+  
+}
+
+.avatar-online-web i{
+ 
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); 
+  font-size: 7px;
+  
+}
+
+.corner-box {
+  
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) no-repeat 100% 0 / 15px 15px, linear-gradient(-135deg, transparent 10px, #337AB7 0);
+                  
+}
+
+.corner-box::before{
+  
+  content: '';
+  position: absolute;
+  top: 15px; 
+  right: 0;
+  background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,0.1) 0) 100% 0 no-repeat;
+  width: 15px;
+  height: 15px;
+  transform: rotate(180deg);
+
+}
+
+.corner-box-icons {
+  
+  position: absolute; 
+  top: -9px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  
+}
+
+.corner-box-ext {
+  
+  position: absolute; 
+  top: 12px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  font-size: 13px;
+  
+}
+
+/*
+------------
+Версия 1.8.6
+------------
+*/
+
+.links_show {
+  
+  padding: 8px;
+  border-radius: 7px;
+  border: 1px #C2D3E7 solid;
+  margin-top: 2px;
+  margin-bottom: 2px;
+
+}
+
+.links_show b{
+  
+  color: #4B555F;
+
+}
+
+.user-login-menu, .btn, .btn-o, .button, .button-o, .button2, .button3, .modal-bottom-button, .upload-container-button, .ptr-a, .menu-profile-button {
+  
+  cursor: pointer;
+  
+}
+
+#profile-menu-modal span, .profile-menu-modal span, .panel-top-modal span{
+  
+  cursor: pointer;
+  
+}
+
+.games_info {
+  
+  color: #466877;
+  position: relative;
+  left: -5px;
+  top: -2px;
+  
+}
+
+.ell-optimize {
+  
+  top: 23px;
+  right: 1px;
+  
+}
+
+.input-info {
+  
+  z-index: 104;
+  
+}
+
+.games_fr_list {
+  
+  padding: 6px;
+  background-color: #DDF0FF;
+  margin-top: 4px;
+  border-radius: 4px;
+  
+}
+
+.games_fr_list_text {
+  
+  position: relative;
+  top: -7px;
+  left: 6px;
+  color: #255175;
+  
+}
+
+.games_fr_list_avatars {
+  
+  position: relative;
+  top: 2px;
+  left: 9px;
+  color: #255175;
+  
+}
+
+.adult {
+  
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  color: white;
+  font-size: 9px;
+  background-color: #EE3C6F;
+  border-radius: 100%;
+  position: relative;
+  left: 5px;
+  display: inline-block;
+  font-weight: bold;
+  
+}
+
+.adult_big {
+  
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  background-color: #EE3C6F;
+  border-radius: 100%;
+  position: relative;
+  left: 5px;
+  font-weight: bold;
+  
+}
+
+.image_blur {
+  
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  filter: blur(5px);
+  
+}
+
+/*
+------------
+Версия 1.8.7
+------------
+*/
+
+@media screen and (max-width: 355px) {
+  
+  .menu-container_item-info div{
+    
+    font-size: 12px;
+    
+  }
+  
+}
+
+/*
+------------
+Версия 1.8.9
+------------
+*/
+
+.list-mess {
+  
+  background-color: #FFFFCD;
+  font-size: 13px;
+  position: relative;
+  
+}
+
+.list-mess b{
+  
+  color: #69634E;
+  font-size: 14px;
+  
+}
+
+.list-mess-info-close {
+  
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  color: #75878F;
+  cursor: pointer;
+  
+}
+
+.list-mess-info-close:hover {
+
+  color: black;
+  
+}
+
+.resources_info {
+  
+  font-size: 13px;
+  color: #546E7A;
+  
+}
+
+.resources_info b{
+  
+  margin-right: 8px;
+  margin-top: 3px;
+  display: inline-block;
+  
+}
+
+.avatar_button {
+  
+  z-index: 10;
+  
+}

@@ -1,0 +1,71 @@
+#imgsh_phone {
+  
+  background: rgba(80,80,80,0.8);
+  position: fixed;
+  z-index: 105;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  
+}
+
+#imgsh_obj img{
+
+  overflow: hidden;
+  max-width: 100%;
+  
+}
+
+.imgsh_obj_optimize{
+
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -45%);
+  text-align: center;
+  
+}
+
+.imgsh_obj_optimize div{
+
+  position: relative;
+  display: inline-block;
+  max-width: 85%;
+  overflow: hidden;
+  
+}
+
+.imgsh_obj_close{
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #3A474C;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: #ECF0F1;
+  z-index: 106;
+  
+}
+
+.img_name {
+
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  min-width: 250px;
+  transform: translateX(-50%);
+  background-color: #3A474C;
+  display: inline-block;
+  color: #ECF0F1;
+  padding: 6px 2em;
+  border-radius: 7px;
+  z-index: 107;
+  font-size: 13px;
+  
+}

@@ -1,0 +1,1 @@
+<a class='menu-container_item-info' href='/m/rules/'><div><?=m_icons('exclamation-triangle', 12, '#4EB585')?> <?=lg('Правила')?></div></a>

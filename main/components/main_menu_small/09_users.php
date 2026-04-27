@@ -1,0 +1,1 @@
+<a class='panel-left-menu hover' href='/m/users/'><?=m_icons('user', 12, '#37A6FF')?> <span><?=lg('Пользователи')?></span></a>

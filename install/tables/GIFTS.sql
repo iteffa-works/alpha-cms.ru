@@ -1,0 +1,21 @@
+CREATE TABLE `GIFTS` (
+  
+
+`ID` int(11) NOT NULL AUTO_INCREMENT,
+  
+
+`ID_DIR` int(11) DEFAULT NULL,
+  
+
+`NAME` varchar(300) DEFAULT NULL,
+  
+
+`EXT` varchar(50) DEFAULT NULL,
+  
+
+`ACT` int(11) DEFAULT '1',
+
+`SUM` double(10,2) DEFAULT '0',
+PRIMARY KEY (`ID`)
+
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
